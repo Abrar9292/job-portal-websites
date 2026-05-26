@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CareerConnect Authentication</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- PRELOADER -->
+
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- TOAST -->
+
+    <div id="toastBox"></div>
+
+    <section class="apply-section">
+
+        <div class="container">
+
+            <div class="row justify-content-center align-items-center min-vh-100">
+
+                <div class="col-lg-5">
+
+                    <div class="apply-form-box">
+
+                        <div class="text-center mb-4">
+
+                            <h2 class="fw-bold">
+
+                                <i class="fa-solid fa-user text-primary"></i>
+                                CareerConnect
+
+                            </h2>
+
+                            <p class="text-muted">
+
+                                Login or create your account
+
+                            </p>
+
+                        </div>
+
+                        <!-- TOGGLE BUTTONS -->
+
+                        <div class="d-flex mb-4 auth-toggle">
+
+                            <button id="loginTab" class="auth-btn active-btn">
+
+                                Login
+
+                            </button>
+
+                            <button id="signupTab" class="auth-btn">
+
+                                Signup
+
+                            </button>
+
+                        </div>
+
+                        <!-- LOGIN FORM -->
+
+                        <form id="loginForm">
+
+                            <div class="mb-4">
+
+                                <input type="email" id="loginEmail" class="form-control portal-input"
+                                    placeholder="Email Address" required>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <input type="password" id="loginPassword" class="form-control portal-input"
+                                    placeholder="Password" required>
+
+                            </div>
+
+                            <button type="submit" class="portal-submit-btn">
+
+                                Login Account
+
+                            </button>
+
+                        </form>
+
+                        <!-- SIGNUP FORM -->
+
+                        <form id="signupForm" style="display:none;">
+
+                            <div class="mb-4">
+
+                                <input type="text" id="signupName" class="form-control portal-input"
+                                    placeholder="Full Name" required>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <input type="email" id="signupEmail" class="form-control portal-input"
+                                    placeholder="Email Address" required>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <input type="password" id="signupPassword" class="form-control portal-input"
+                                    placeholder="Password" required>
+
+                            </div>
+
+                            <button type="submit" class="portal-submit-btn">
+
+                                Create Account
+
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <style>
+        .auth-toggle {
+            gap: 12px;
+        }
+
+        .auth-btn {
+            flex: 1;
+            height: 52px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 900;
+            background: #e2e8f0;
+        }
+
+        .active-btn {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+        }
+    </style>
+
+    <script>
+
+        function showToast(message) {
+
+            const toastBox =
+                document.getElementById("toastBox");
+
+            const toast =
+                document.createElement("div");
+
+            toast.className = "custom-toast";
+
+            toast.innerText = message;
+
+            toastBox.appendChild(toast);
+
+            setTimeout(() => {
+
+                toast.remove();
+
+            }, 2500);
+
+        }
+
+        setTimeout(() => {
+
+            document.getElementById("preloader")
+                .style.display = "none";
+
+        }, 700);
+
+        /* TOGGLE */
+
+        const loginTab =
+            document.getElementById("loginTab");
+
+        const signupTab =
+            document.getElementById("signupTab");
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const signupForm =
+            document.getElementById("signupForm");
+
+        loginTab.addEventListener("click", () => {
+
+            loginForm.style.display = "block";
+            signupForm.style.display = "none";
+
+            loginTab.classList.add("active-btn");
+            signupTab.classList.remove("active-btn");
+
+        });
+
+        signupTab.addEventListener("click", () => {
+
+            signupForm.style.display = "block";
+            loginForm.style.display = "none";
+
+            signupTab.classList.add("active-btn");
+            loginTab.classList.remove("active-btn");
+
+        });
+
+        /* SIGNUP */
+
+        signupForm.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const user = {
+
+                name:
+                    document.getElementById("signupName").value,
+
+                email:
+                    document.getElementById("signupEmail").value,
+
+                password:
+                    document.getElementById("signupPassword").value
+
+            };
+
+            localStorage.setItem(
+                "careerUserData",
+                JSON.stringify(user)
+            );
+
+            showToast("Account Created Successfully!");
+
+            setTimeout(() => {
+
+                loginForm.style.display = "block";
+                signupForm.style.display = "none";
+
+                loginTab.classList.add("active-btn");
+                signupTab.classList.remove("active-btn");
+
+            }, 1500);
+
+        });
+
+        /* LOGIN */
+
+        loginForm.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            const savedUser =
+                JSON.parse(localStorage.getItem("careerUserData"));
+
+            const email =
+                document.getElementById("loginEmail").value;
+
+            const password =
+                document.getElementById("loginPassword").value;
+
+            if (
+
+                savedUser &&
+                savedUser.email === email &&
+                savedUser.password === password
+
+            ) {
+
+                localStorage.setItem(
+                    "careerUser",
+                    "loggedin"
+                );
+
+                showToast("Login Successful!");
+
+                setTimeout(() => {
+
+                    window.location.href = "apply.html";
+
+                }, 1500);
+
+            } else {
+
+                showToast("Invalid Email or Password");
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

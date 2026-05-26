@@ -66,30 +66,6 @@ body {
   border-radius: 50px;
   font-weight: 900;
 }
-/* LOGIN BUTTON */
-
-.login-btn{
-  min-height:52px;
-  padding:0 26px;
-  border-radius:50px;
-  border:2px solid rgba(255,255,255,0.18);
-  color:white;
-  text-decoration:none;
-  font-weight:900;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:0.3s;
-}
-
-.login-btn:hover{
-  background:white;
-  color:#2563eb;
-}
-
-.dark-mode .login-btn{
-  border-color:#334155;
-}
 
 /* HERO */
 
@@ -813,4 +789,28 @@ body {
   .custom-toast {
     text-align: center;
   }
+}
+/* LOGIN BUTTON */
+
+.login-btn{
+  min-height:52px;
+  padding:0 26px;
+  border-radius:50px;
+  border:2px solid rgba(255,255,255,0.18);
+  color:white;
+  text-decoration:none;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.3s;
+}
+
+.login-btn:hover{
+  background:white;
+  color:#2563eb;
+}
+
+.dark-mode .login-btn{
+  border-color:#334155;
 }
